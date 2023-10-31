@@ -27,12 +27,7 @@ const transporter = nodemailer.createTransport({
  */
 
 // Read HTML file
-const templatePath = path.join(
-	path.resolve(),
-	'controllers',
-	'email',
-	'template.html'
-);
+const templatePath = path.join(path.resolve(), 'email', 'template.html');
 const sendEmail = async ({
 	to,
 	subject,
@@ -50,13 +45,6 @@ const sendEmail = async ({
 		htmlContent = htmlContent.replace('DOWNLOAD_LINK', downloadLink);
 	}
 
-	if (replaceInfo.homeBuilder) {
-		console.log('replaceInfo.homeBuilder:', replaceInfo.homeBuilder);
-		htmlContent = htmlContent.replace(
-			/HOMEBUILDER/g, // Use regular expression with 'g' flag for global replacement
-			replaceInfo.homeBuilder ? replaceInfo.homeBuilder : ''
-		);
-	}
 	try {
 		if (to) {
 			const mailOptions = {

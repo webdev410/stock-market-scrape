@@ -1,7 +1,7 @@
 import fs from 'fs';
 import TableData from '../../models/TableData.js';
 import { logInfo, logSuccess } from './logAction.js';
-const interceptAndSave = (page, searchString, filepath) => {
+const interceptAndSave = (page, searchString, name) => {
 	return new Promise(async (resolve, reject) => {
 		const listener = async (response) => {
 			const url = response.url();
@@ -9,7 +9,7 @@ const interceptAndSave = (page, searchString, filepath) => {
 				try {
 					const payload = await response.json();
 					console.log({ payload });
-					fs.writeFileSync(filepath, JSON.stringify(payload));
+					fs.writeFileSync(`./output/${name}.json`, JSON.stringify(payload));
 
 					// Remove this response listener to prevent memory leaks.
 					page.off('response', listener);
