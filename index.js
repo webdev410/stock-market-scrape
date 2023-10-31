@@ -1,11 +1,9 @@
 import fs from 'fs';
 import initPage from './puppetteer/helpers/initPage.js';
 import interceptAndSave from './puppetteer/helpers/interceptAndSave.js';
+import { logAction, logInfo, logPink } from './puppetteer/helpers/logAction.js';
 import wait from './puppetteer/helpers/wait.js';
 import json2csv from './utils/json2csv.js';
-import { logAction, logInfo, logPink } from './puppetteer/helpers/logAction.js';
-import TableData from './models/TableData.js';
-import sendEmail from './email/sendEmail.js';
 
 function readFileAndConvertCSV(name) {
 	let csv = '';
@@ -60,37 +58,7 @@ const init = async () => {
 	}
 
 	const emails = ['andrewkeiser@gmail.com' /* 'bakeiser17@gmail.com'*/];
-	for (const email of emails) {
-		const sp500 = fs.readFileSync(`./output/sp500.csv`, 'utf8');
-		const nasdaq = fs.readFileSync(`./output/nasdaq.csv`, 'utf8');
-		const dow = fs.readFileSync(`./output/dow.csv`, 'utf8');
-		const russell2000 = fs.readFileSync(`./output/russell2000.csv`, 'utf8');
-		const date = new Date();
-		const attachments = [
-			{
-				filename: `${date}-sp500.csv`,
-				content: sp500 || 'export failed',
-			},
-			{
-				filename: `${date}-nasdaq.csv`,
-				content: nasdaq || 'export failed',
-			},
-			{
-				filename: `${date}-dow.csv`,
-				content: dow || 'export failed',
-			},
-			{
-				filename: `${date}-russell2000.csv`,
-				content: russell2000 || 'export failed',
-			},
-		];
 
-		await sendEmail({
-			to: email,
-			subject: 'Stock Reports',
-			text: 'Here are the stock reports you requested',
-		});
-	}
 	await browser.close();
 	return;
 };
