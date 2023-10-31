@@ -1,15 +1,30 @@
+import fs from 'fs';
 import TableData from '../../models/TableData.js';
+import { logInfo, logSuccess } from './logAction.js';
+const interceptAndSave = (page, searchString, filepath) => {
+	return new Promise(async (resolve, reject) => {
+		const listener = async (response) => {
+			const url = response.url();
+			if (url.includes(searchString)) {
+				try {
+					const payload = await response.json();
+					console.log({ payload });
+					fs.writeFileSync(filepath, JSON.stringify(payload));
 
-const interceptAndSave = (page, searchString) => {
-	page.on('response', async (response) => {
-		const url = response.url();
+					// Remove this response listener to prevent memory leaks.
+					page.off('response', listener);
 
-		if (url.includes(searchString)) {
-			const payload = await response.json();
-			console.log({ payload });
+					resolve(payload);
+				} catch (error) {
+					// Remove this response listener to prevent memory leaks.
+					page.off('response', listener);
 
-			return payload;
-		}
+					reject(error);
+				}
+			}
+		};
+
+		page.on('response', listener);
 	});
 };
 

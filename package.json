@@ -4,22 +4,28 @@
 	"description": "",
 	"main": "index.js",
 	"type": "module",
+	"bin": "index.js",
 	"pkg": {
 		"assets": [
-			"path/to/your/assets/**/*",
-			"puppeteer/helpers/**/*",
-			"./utils/json2Csv.js"
+			"./node_modules/**/*",
+			"./db/**/*",
+			"./puppeteer/**/*",
+			"./email/**/*",
+			"./models/**/*",
+			"./utils/**/*",
+			"./index.js"
 		],
 		"targets": [
-			"node14-linux-x64",
-			"node14-macos-x64",
-			"node14-win-x64"
-		]
+			"node18-linux-x64",
+			"node18-macos-x64",
+			"node18-win-x64"
+		],
+		"outputPath": "dist"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "nodemon index.js",
-		"build": "pkg ."
+		"build": "pkg index.js"
 	},
 	"author": "",
 	"license": "ISC",
