@@ -1,6 +1,4 @@
 import fs from 'fs';
-import TableData from '../../models/TableData.js';
-import { logInfo, logSuccess } from './logAction.js';
 const interceptAndSave = (page, searchString, name) => {
 	return new Promise(async (resolve, reject) => {
 		const listener = async (response) => {

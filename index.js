@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import initPage from './puppetteer/helpers/initPage.js';
 import interceptAndSave from './puppetteer/helpers/interceptAndSave.js';
@@ -9,10 +10,7 @@ import {
 } from './puppetteer/helpers/logAction.js';
 import wait from './puppetteer/helpers/wait.js';
 import json2csv from './utils/json2csv.js';
-import express from 'express';
-import path from 'path';
-const app = express();
-const __dirname = path.resolve();
+
 function readFileAndConvertCSV(name) {
 	let csv = '';
 	const filecontents = fs.readFileSync(`./output/${name}.json`, 'utf8');
@@ -70,6 +68,4 @@ const init = async () => {
 	return;
 };
 
-app.use('/', express.static(path.join(__dirname, 'public')));
 init();
-app.listen(8888);
