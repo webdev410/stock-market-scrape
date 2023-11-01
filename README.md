@@ -1,5 +1,9 @@
 # bk-scrape
 
+```bash
+execute bk-scrape
+```
+
 From Barchart:
 
 S&P 500: https://www.barchart.com/stocks/indices/sp/sp500?viewName=main
