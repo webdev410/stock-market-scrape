@@ -30,8 +30,5 @@
 		"ignore": [
 			"output/*"
 		]
-	},
-	"devDependencies": {
-		"electron": "^27.0.2"
 	}
 }
