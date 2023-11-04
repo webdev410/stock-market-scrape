@@ -68,4 +68,4 @@ const init = async () => {
 	return;
 };
 
-init();
+export default init;

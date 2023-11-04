@@ -6,9 +6,8 @@ const interceptAndSave = (page, searchString, name) => {
 			if (url.includes(searchString)) {
 				try {
 					const payload = await response.json();
-					console.log({ payload });
 					fs.writeFileSync(`./output/${name}.json`, JSON.stringify(payload));
-
+					console.log('saved', name);
 					// Remove this response listener to prevent memory leaks.
 					page.off('response', listener);
 
