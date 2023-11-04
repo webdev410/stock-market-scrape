@@ -8,6 +8,10 @@ import path from 'path';
 const PORT = 5017;
 const app = express();
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
 
 app.get('/api/get-data', async (req, res) => {
 	try {
