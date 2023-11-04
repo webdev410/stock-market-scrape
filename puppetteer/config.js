@@ -5,8 +5,8 @@ const config = {
 	puppeteerOptions: {
 		// slowMo: 30,
 		// devtools: true,
-		// headless: 'new',
-		headless: false,
+		headless: 'new',
+		// headless: false,
 		args: [
 			'--disable-web-security',
 			// '--no-sandbox',
