@@ -21,6 +21,7 @@ EOF
 
 # Create a symbolic link to enable the site
 sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/bk.keiserdev.com.conf /etc/nginx/sites-enabled/
 echo "sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled/"
 
 # Test Nginx configuration
