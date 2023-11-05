@@ -9,8 +9,7 @@ import {
 	logSuccess,
 } from './puppetteer/helpers/logAction.js';
 import wait from './puppetteer/helpers/wait.js';
-import json2csv from './utils/json2csv.js';
-
+import json2csv from './utils/json2Csv.js';
 function readFileAndConvertCSV(name) {
 	let csv = '';
 	const filecontents = fs.readFileSync(`./output/${name}.json`, 'utf8');
