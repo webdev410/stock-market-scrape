@@ -32,7 +32,6 @@ From websites other than Barchart:
 
 ## excel snippet
 
-'''js
 
     Excel.run(async (context) => {
     // Get the active worksheet
@@ -60,7 +59,6 @@ From websites other than Barchart:
     headerRange.format.font.bold = true;
 
     await context.sync();
-}).catch(error => {
-    console.error(error);
-});
-'''
+    }).catch(error => {
+        console.error(error);
+    });
