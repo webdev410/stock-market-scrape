@@ -33,7 +33,8 @@ From websites other than Barchart:
 ## excel snippet
 
 '''js
-Excel.run(async (context) => {
+
+    Excel.run(async (context) => {
     // Get the active worksheet
     let sheet = context.workbook.worksheets.getActiveWorksheet();
 
