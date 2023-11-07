@@ -5,29 +5,57 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BK Scrape</title>
 	<style>
+		:root {
+			--primary-bg-color: #333;
+			--text-color: #fff;
+			--spinner-primary: #3498db;
+			--spinner-secondary: #f3f3f3;
+			--font-family: 'Arial', 'Helvetica', sans-serif;
+			--link-hover-color: #ddd;
+		}
+
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
-			font-family: Arial, Helvetica, sans-serif;
+			font-family: var(--font-family);
+		}
+
+		body {
+			background-color: var(--primary-bg-color);
+			color: var(--text-color);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			text-align: center;
 		}
 
 		.text {
 			margin: 10px;
-			text-align: center;
+			font-size: larger;
+		}
+
+		.mt-3 {
+			margin-top: 25px;
 		}
 
 		.loader {
-			border: 16px solid #f3f3f3;
+			border: 16px solid var(--spinner-secondary);
+			border-top: 16px solid var(--spinner-primary);
 			border-radius: 50%;
-			border-top: 16px solid #3498db;
 			width: 120px;
 			height: 120px;
 			animation: spin 2s linear infinite;
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			margin: -60px 0 0 -60px;
+		}
+
+		.messages {
+			cursor: pointer;
+		}
+
+		.messages:hover {
+			color: var(--link-hover-color);
 		}
 
 		@keyframes spin {
@@ -42,49 +70,55 @@
 	</style>
 </head>
 <body>
-	<p class="text">please wait... your file should download automatically. if it does not download after 1 minute,
-		refresh
-	</p>
+	<div class="messages mt-3" onclick="window.location.reload();">
+		<p class="text">Please wait...</p>
+		<p class="text">Getting stock data</p>
+		<p class="text">Your file should download automatically.</p>
+		<p class="text">
+			If it does not download after 1 minute, click here to refresh.
+		</p>
+	</div>
 	<!-- Loading Spinner -->
 	<div class="loader" id="loader"></div>
 	<script>
-		// Start the fetch process as soon as the page loads
 		window.onload = function () {
+			// Function to hide the loader and provide download link
+			function handleFetchComplete() {
+				const loader = document.getElementById('loader');
+				loader.style.display = 'none';
+			}
+
 			fetch('/api/get-data')
 				.then(response => {
 					if (response.ok) {
 						response.blob().then(blob => {
-							// Create a link element, use it to download the file, and then click it
 							const url = window.URL.createObjectURL(blob);
 							const a = document.createElement('a');
 							a.style.display = 'none';
 							a.href = url;
-							// the filename you want
 							a.download = 'data.zip';
 							document.body.appendChild(a);
 							a.click();
 							window.URL.revokeObjectURL(url);
-							alert('Your file has started downloading.');
+							console.log('Your file has downloaded!');
+							handleFetchComplete();
 						});
 					} else {
 						alert('There was a problem with the request.');
+						handleFetchComplete();
 					}
 				})
 				.catch(error => {
 					alert('An error occurred while fetching the data.');
 					console.error('Fetch error:', error);
-				})
-				.finally(() => {
-					// Hide the loader when the fetch is complete
-					document.getElementById('loader').style.display = 'none';
+					handleFetchComplete();
 				});
 
 			// Set a timeout to alert the user if the download does not start
 			setTimeout(() => {
-				const loader = document.getElementById('loader');
-				if (loader.style.display !== 'none') {
+				if (document.getElementById('loader').style.display !== 'none') {
 					alert('The download is taking longer than expected. Please refresh.');
-					loader.style.display = 'none';
+					handleFetchComplete();
 				}
 			}, 60000); // 60 seconds
 		};
